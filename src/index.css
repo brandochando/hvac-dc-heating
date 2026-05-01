@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-stone: #EEF2F7;
+  --color-charcoal: #0D1B2A;
+  --color-slate-blue: #0D4C7A;
+  --color-luxury-gold: #1470AF;
+  --color-beige-light: #C8DFF0;
+  --color-brand-blue-deep: #0D4C7A;
+  --color-brand-blue-soft: #8EB6DC;
+}
+
+@layer base {
+  body {
+    @apply bg-stone text-charcoal font-sans antialiased selection:bg-luxury-gold/30;
+    cursor: none;
+  }
+
+  /* Force hide cursor on all interactive elements */
+  a, button, input, textarea, select, [role="button"], .clickable {
+    cursor: none !important;
+  }
+
+  /* Reduce 300ms tap delay on mobile */
+  a, button, [role="button"] {
+    touch-action: manipulation;
+  }
+
+  /* Visible keyboard focus (the custom cursor hides the pointer, so focus-visible must be unambiguous) */
+  :focus-visible {
+    outline: 2px solid var(--color-luxury-gold);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight leading-tight;
+  }
+}
+
+/* Screen-reader-only utility for accessible labels and live regions */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip-to-content link — visible only when focused */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-150%);
+  background: var(--color-charcoal);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  z-index: 9999;
+  transition: transform 150ms ease-out;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@layer utilities {
+  .section-padding {
+    @apply py-24 lg:py-48;
+  }
+
+  /* Custom text styles for luxury branding */
+  .title-1 { @apply text-5xl md:text-7xl lg:text-9xl font-light tracking-tighter; }
+  .title-2 { @apply text-4xl md:text-5xl lg:text-7xl font-light tracking-tight; }
+  
+  .txt-mono { @apply font-mono text-[10px] tracking-[0.2em] uppercase; }
+  .txt-1 { @apply text-lg md:text-xl lg:text-2xl leading-relaxed text-charcoal/60; }
+}
+
+/* Custom Cursor Classes */
+.cursor-dot {
+  @apply fixed top-0 left-0 w-2 h-2 bg-white rounded-full pointer-events-none z-[1000] mix-blend-difference;
+  transition: transform 0.1s ease;
+}
+
+.cursor-outline {
+  @apply fixed top-0 left-0 w-10 h-10 border border-white/50 rounded-full pointer-events-none z-[999] mix-blend-difference;
+  transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+/* Hide cursor on mobile */
+@media (max-width: 1024px) {
+  body {
+    cursor: auto;
+  }
+  .cursor-dot, .cursor-outline {
+    display: none;
+  }
+}
+
+/* Also disable the custom cursor on coarse/touch pointers regardless of width */
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+  a, button, input, textarea, select, [role="button"], .clickable {
+    cursor: auto !important;
+  }
+  .cursor-dot, .cursor-outline {
+    display: none;
+  }
+}
+
+/* Respect user's reduced-motion preference globally */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor-dot, .cursor-outline {
+    display: none;
+  }
+  body {
+    cursor: auto;
+  }
+}
