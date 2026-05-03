@@ -74,7 +74,7 @@ const Header = () => {
         <img
           src={BRAND_LOGO_DARK}
           alt={BRAND_FULL_NAME}
-          className="h-9 md:h-11 w-auto object-contain transition-[filter] duration-500"
+          className="h-16 md:h-20 w-auto object-contain transition-[filter] duration-500"
           style={{
             filter: isScrolled
               ? "none"

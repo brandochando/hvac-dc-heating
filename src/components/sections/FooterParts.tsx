@@ -294,7 +294,7 @@ const Footer = () => {
               <img
                 src={BRAND_LOGO_LIGHT}
                 alt={BRAND_FULL_NAME}
-                className="h-14 w-auto object-contain"
+                className="h-20 w-auto object-contain"
                 width={200}
                 height={56}
               />
